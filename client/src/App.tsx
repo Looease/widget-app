@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import WidgetPage from './components/WidgetPage'
 import './App.css'
 
 function App() {
@@ -8,9 +7,11 @@ function App() {
 
   return (
     <>
-    <h1>Widget app</h1>
+    <main>
+      <WidgetPage/>
+    </main>
     </>
   )
 }
 
-export default App
+export default App;
