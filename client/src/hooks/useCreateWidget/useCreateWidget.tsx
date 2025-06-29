@@ -10,7 +10,7 @@ interface CreateWidgetResponse {
   widget: Widget;
 }
 
-const useCreateWidget = () => {
+export const useCreateWidget = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<Widget | null>(null);
@@ -44,5 +44,3 @@ const useCreateWidget = () => {
 
   return { createWidget, loading, error, data };
 };
-
-export default useCreateWidget;

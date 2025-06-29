@@ -1,37 +1,41 @@
-import { useState } from 'react'
+import { useCallback, useState } from "react";
 import { useGetWidgets } from "../../hooks/useGetWidgets/useGetWidgets"
 import Widget from '../Widget'
 
+import "./Widget.css";
 
 const WidgetPage = () => {
-const [addWidget, setAddWidget] = useState(false)
-const [a, b] = useState(false)
+  const [addWidget, setAddWidget] = useState(false);
 
-const handleAddWidget = () => {
-    console.log('add widget')
-    setAddWidget(true)
-    b(true)
-}
+  const handleAddWidget = () => {
+    setAddWidget(true);
+  };
 
-const { data, loading, error } = useGetWidgets(a);
+  const { data = [], loading, error, refetchWidgets } = useGetWidgets() || {};
 
-const { widgets = [] } = data
+  const { widgets = [] } = data || {};
 
-return (
+  const handleRefetch = refetchWidgets;
+
+  return (
     <>
-    <button onClick={handleAddWidget}>Add widget</button>
+      <button onClick={handleAddWidget}>Add widget</button>
 
-     {!!addWidget && (
-        <Widget />
-    )}
+      {!!addWidget && (
+        <Widget widget={null} addWidget={addWidget} handleRefetch={handleRefetch} setAddWidget={setAddWidget}/>
+      )}
 
-    {widgets.length >= 1 && widgets.map((widget) => (
-        <Widget widget={widget}/>
-    ))}
-
-
+      {widgets.length === 0 ? (
+        <></>
+      ) : (
+        <div className="widgets-grid-container">
+          {widgets.map((widget) => (
+            <Widget widget={widget} addWidget={addWidget} handleRefetch={handleRefetch} setAddWidget={setAddWidget}/>
+          ))}
+        </div>
+      )}
     </>
-)
-}
+  );
+};
 
 export default WidgetPage;
