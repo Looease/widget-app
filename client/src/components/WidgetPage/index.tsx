@@ -1,2 +1,2 @@
-import WidgetPage from './WidgetPage'
-export default WidgetPage
+import WidgetPage from "./WidgetPage";
+export default WidgetPage;
