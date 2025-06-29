@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useCreateWidget } from "../../hooks/useCreateWidget/useCreateWidget";
 import { useDeleteWidget } from "../../hooks/useDeleteWidget/useDeleteWidget";
-import type { WidgetType } from '../../requests/getWidgets/getWidgets.types'
-import { useDebounce } from '../../hooks/useDebounce/useDebounce'
+import type { WidgetType } from "../../requests/getWidgets/getWidgets.types";
+import { useDebounce } from "../../hooks/useDebounce/useDebounce";
 import "./Widget.css";
 
 export const Widget = ({
   widget,
   addWidget,
   handleRefetch,
-  setAddWidget
+  setAddWidget,
 }: {
   widget: WidgetType | null;
   addWidget: boolean;
@@ -26,10 +26,9 @@ export const Widget = ({
 
   const { deleteItem: deleteWidget } = useDeleteWidget();
 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    
+
     setContent(value);
   };
 
@@ -44,22 +43,22 @@ export const Widget = ({
 
   const searchQuery = useDebounce(content, 2000);
 
-   useEffect(() => {
-   const createNewWidget = async () => {
-        if(!creatingWidget){
-      setAddWidget(false);
-      setContent('');
-    }
+  useEffect(() => {
+    const createNewWidget = async () => {
+      if (!creatingWidget) {
+        setAddWidget(false);
+        setContent("");
+      }
       try {
-      await createWidget(content);
-      handleRefetch();
-    } catch (e) {
-      console.error("Error:", e);
-    }
-   }
+        await createWidget(content);
+        handleRefetch();
+      } catch (e) {
+        console.error("Error:", e);
+      }
+    };
 
-  if (searchQuery || content.length < 0) createNewWidget();
- }, [searchQuery]);
+    if (searchQuery || content.length < 0) createNewWidget();
+  }, [searchQuery]);
 
   return (
     <>
@@ -81,18 +80,17 @@ export const Widget = ({
           <div className="innerWidget">
             {!!widget && (
               <>
-              <p>{widget.content}</p>
-              <button onClick={() => handleDelete(widget.id)}>Delete</button>
-            </>
+                <p>{widget.content}</p>
+                <button onClick={() => handleDelete(widget.id)}>Delete</button>
+              </>
             )}
-            
           </div>
         </section>
       )}
       {!!createWidgetError && (
-          <section className="container">
+        <section className="container">
           <div className="innerWidget">
-            <p>Create widget error. Please delete this one and try again.</p>  
+            <p>Create widget error. Please delete this one and try again.</p>
           </div>
         </section>
       )}

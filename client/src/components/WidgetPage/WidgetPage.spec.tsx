@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import WidgetPage from "./WidgetPage";
 
-let widgetArray: never[] = []
+let widgetArray: never[] = [];
 
-vi.mock('../../hooks/useGetWidgets/useGetWidgets', async () => {
+vi.mock("../../hooks/useGetWidgets/useGetWidgets", async () => {
   return {
     useGetWidgets: vi.fn(() => ({
       data: widgetArray,
@@ -16,7 +16,7 @@ vi.mock('../../hooks/useGetWidgets/useGetWidgets', async () => {
   };
 });
 
-vi.mock('../../hooks/useCreateWidget/useCreateWidget', async () => {
+vi.mock("../../hooks/useCreateWidget/useCreateWidget", async () => {
   return {
     useCreateWidget: vi.fn(() => ({
       data: {},
@@ -45,8 +45,7 @@ describe("Widget page", () => {
 
     await userEvent.click(createbutton);
 
-    expect(screen.getByLabelText('Create')).toBeTruthy()
-
+    expect(screen.getByLabelText("Create")).toBeTruthy();
   });
   test("should add a widget on button click", () => {
     render(<WidgetPage />);

@@ -1,8 +1,8 @@
 export type WidgetType = {
-    id: number;
-    content: string;
-}
+  id: number;
+  content: string;
+};
 
 export type Widgets = {
-    widgets: WidgetType[];
-}
+  widgets: WidgetType[];
+};

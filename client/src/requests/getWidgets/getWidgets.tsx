@@ -1,4 +1,4 @@
-import type { Widgets } from './getWidgets.types'
+import type { Widgets } from "./getWidgets.types";
 
 export const getWidgets = async (): Promise<Widgets> => {
   const url = "http://localhost:3000/widgets";
