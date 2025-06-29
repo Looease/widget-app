@@ -2,6 +2,9 @@ import express, { urlencoded, json } from "express";
 import cors from "cors";
 import { Pool } from 'pg';
 import { createWidget } from './services/create-widget/createWidget.ts'
+import { getWidgets } from "./services/get-widgets/getWidgets.ts";
+import { deleteWidget } from "./services/delete-widget/deleteWidget.ts";
+
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -35,11 +38,22 @@ app.get("/", (req, res) => {
   res.status(200).json({ msg: "Server is up and running" });
 });
 
-app.get("/widgets", (req, res) => {
+app.get("/widgets", async (req, res) => {
+  try{
+    const result = await getWidgets(pool);
 
-  const id = Math.random() + 22
+    console.log(result, 'result')
+
+    res.status(200).json({
+      widgets: result || []
+    });
+  }catch(error){
+     if(error && error instanceof Error){
+      console.error(`Something went wrong getting widgets. ${error.message}`);
+    }
+    res.status(500).json({ error: "Something went wrong getting widgets" });
+  }
   
-  res.status(200).json({ widgets: [ { id: Math.floor(id), content: 'Widget content 123' }]  });
 });
 
 app.post("/create-widget", async (req, res) => {
@@ -54,9 +68,26 @@ app.post("/create-widget", async (req, res) => {
     res.status(201).json({
       widget: newWidget
     });
-  } catch (error: any) {
-    console.error("Error creating widget:", error.message);
-    res.status(500).json({ error: "Failed to create widget" });
+  } catch (error: unknown) {
+    if(error && error instanceof Error){
+      console.error(`Something went wrong creating widgets. ${error.message}`);
+    }
+    res.status(500).json({ error: "Something went wrong creating widgets" });
+  }
+});
+
+app.post("/delete-widget", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const deletedItem = await deleteWidget(pool, id);
+    console.log('widget deleted');
+    res.status(200).json({ deletedId: deletedItem[0].id });
+  } catch (error: unknown) {
+    if(error && error instanceof Error){
+      console.error(`Something went wrong deleting widget. ${error.message}`);
+    }
+    res.status(500).json({ error: "Something went wrong deleting widget" });
   }
 });
 
