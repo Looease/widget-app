@@ -1,6 +1,8 @@
 import { useState, type SetStateAction } from "react";
 import { useCreateWidget } from "../../hooks/useCreateWidget/useCreateWidget";
 import { useDeleteWidget } from "../../hooks/useDeleteWidget/useDeleteWidget";
+import type { WidgetType } from '../../requests/getWidgets/getWidgets.types'
+
 
 import "./Widget.css";
 
@@ -10,7 +12,7 @@ export const Widget = ({
   handleRefetch,
   setAddWidget
 }: {
-  widget: any | null;
+  widget: WidgetType | null;
   addWidget: boolean;
   handleRefetch: () => void;
   setAddWidget: (state: boolean) => void;
@@ -70,8 +72,13 @@ export const Widget = ({
       ) : (
         <section className="container">
           <div className="innerWidget">
-            <p>{widget.content}</p>
+            {!!widget && (
+              <>
+              <p>{widget.content}</p>
             <button onClick={() => handleDelete(widget.id)}>Delete</button>
+            </>
+            )}
+            
           </div>
         </section>
       )}
