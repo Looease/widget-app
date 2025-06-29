@@ -1,1 +1,1 @@
-export * from './createWidget'
+export * from "./createWidget";

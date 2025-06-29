@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useGetWidgets } from "../../hooks/useGetWidgets/useGetWidgets"
-import Widget from '../Widget'
+import { useGetWidgets } from "../../hooks/useGetWidgets/useGetWidgets";
+import Widget from "../Widget";
 
 import "./Widget.css";
 import type { WidgetType } from "../../requests/getWidgets/getWidgets.types";
@@ -23,7 +23,12 @@ const WidgetPage = () => {
       <button onClick={handleAddWidget}>Add widget</button>
 
       {!!addWidget && (
-        <Widget widget={null} addWidget={addWidget} handleRefetch={handleRefetch} setAddWidget={setAddWidget}/>
+        <Widget
+          widget={null}
+          addWidget={addWidget}
+          handleRefetch={handleRefetch}
+          setAddWidget={setAddWidget}
+        />
       )}
 
       {widgets.length === 0 ? (
@@ -31,7 +36,12 @@ const WidgetPage = () => {
       ) : (
         <div className="widgets-grid-container">
           {widgets.map((widget: WidgetType) => (
-            <Widget widget={widget} addWidget={false} handleRefetch={handleRefetch} setAddWidget={setAddWidget}/>
+            <Widget
+              widget={widget}
+              addWidget={false}
+              handleRefetch={handleRefetch}
+              setAddWidget={setAddWidget}
+            />
           ))}
         </div>
       )}

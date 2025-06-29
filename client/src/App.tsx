@@ -2,7 +2,6 @@ import WidgetPage from "./components/WidgetPage";
 import "./App.css";
 
 function App() {
-
   return (
     <>
       <main>
