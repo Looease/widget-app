@@ -1,12 +1,16 @@
 import { describe, test, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Widget from "./Widget";
+import type { Widgets } from "../../requests/getWidgets/getWidgets.types";
+
+let data: Widgets | {} = {};
+let error: string | null = null;
 
 vi.mock('../../hooks/useGetWidgets/useGetWidgets', async () => {
   return {
     useGetWidgets: vi.fn(() => ({
-      data: [],
+      data: data,
       loading: false,
       error: null,
       refetchWidgets: vi.fn(),
@@ -19,7 +23,7 @@ vi.mock('../../hooks/useCreateWidget/useCreateWidget', async () => {
     useCreateWidget: vi.fn(() => ({
       data: {},
       loading: false,
-      error: null,
+      error: error,
       refetchWidgets: vi.fn(),
     })),
   };
@@ -34,5 +38,39 @@ describe("Widget", () => {
     await userEvent.type(input, "Enquiry");
 
     expect(input).toHaveValue("Enquiry");
+  });
+  // test('should submit widget when user stops typing', async () =>{
+  //   render(<Widget widget={null} addWidget={true} handleRefetch={vi.fn()} setAddWidget={vi.fn()}/>);
+    
+  //   const input = screen.getByRole("textbox", { name: "Create" });
+
+  //   await userEvent.type(input, "Enquiry");
+
+  //   await waitFor(() => {
+  //     expect(screen.getByText('Enquiry')).toBeTruthy();
+  //   })
+  // });
+  test('should render saved widget', async () =>{
+    const widget = {
+      id: 1,
+      content: 'Sales enquiry.'
+    }
+    render(<Widget widget={widget} addWidget={false} handleRefetch={vi.fn()} setAddWidget={vi.fn()}/>);
+     
+    expect(screen.getByText('Sales enquiry.')).toBeTruthy();
+    expect(screen.queryByRole("textbox", { name: "Create" })).not.toBeTruthy()
+  
+  });
+    test('should render error widget if error creating widget', async () =>{
+    error = 'Error creating widget';
+    render(<Widget widget={null} addWidget={true} handleRefetch={vi.fn()} setAddWidget={vi.fn()}/>);
+
+    const input = screen.getByRole("textbox", { name: "Create" });
+
+    await userEvent.type(input, "Enquiry");
+
+     await waitFor(() => {
+        expect(screen.getByText('Create widget error. Please delete this one and try again.')).toBeTruthy();
+    })
   });
 });
