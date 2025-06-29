@@ -42,8 +42,6 @@ app.get("/widgets", async (req, res) => {
   try{
     const result = await getWidgets(pool);
 
-    console.log(result, 'result')
-
     res.status(200).json({
       widgets: result || []
     });
@@ -59,9 +57,9 @@ app.get("/widgets", async (req, res) => {
 app.post("/create-widget", async (req, res) => {
   const { content } = req.body;
 
-  // if (!content) {
-  //   return res.status(400).json({ error: "Content is required." });
-  // }
+  if (!content) {
+    res.status(400).json({ error: "Content is required." });
+  }
 
   try {
     const newWidget = await createWidget(pool, content);
@@ -81,7 +79,6 @@ app.post("/delete-widget", async (req, res) => {
 
   try {
     const deletedItem = await deleteWidget(pool, id);
-    console.log('widget deleted');
     res.status(200).json({ deletedId: deletedItem[0].id });
   } catch (error: unknown) {
     if(error && error instanceof Error){
