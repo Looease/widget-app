@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useGetWidgets } from "../../hooks/useGetWidgets/useGetWidgets"
 import Widget from '../Widget'
 
 import "./Widget.css";
+import type { WidgetType } from "../../requests/getWidgets/getWidgets.types";
 
 const WidgetPage = () => {
   const [addWidget, setAddWidget] = useState(false);
@@ -11,7 +12,7 @@ const WidgetPage = () => {
     setAddWidget(true);
   };
 
-  const { data = [], loading, error, refetchWidgets } = useGetWidgets() || {};
+  const { data, loading, error, refetchWidgets } = useGetWidgets() || {};
 
   const { widgets = [] } = data || {};
 
@@ -29,8 +30,8 @@ const WidgetPage = () => {
         <></>
       ) : (
         <div className="widgets-grid-container">
-          {widgets.map((widget) => (
-            <Widget widget={widget} addWidget={addWidget} handleRefetch={handleRefetch} setAddWidget={setAddWidget}/>
+          {widgets.map((widget: WidgetType) => (
+            <Widget widget={widget} addWidget={false} handleRefetch={handleRefetch} setAddWidget={setAddWidget}/>
           ))}
         </div>
       )}
