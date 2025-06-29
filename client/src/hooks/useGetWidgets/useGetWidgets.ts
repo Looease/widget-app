@@ -1,27 +1,28 @@
-import { useState, useEffect } from 'react'
-import { getWidgets } from '../../requests/getWidgets/getWidgets';
+import { useState, useEffect, useCallback } from "react";
+import { getWidgets } from "../../requests/getWidgets/getWidgets";
 
-export const useGetWidgets = (enabled: boolean) => {
-const [data, setData] = useState<[]>([]);
-const [loading, setLoading] = useState(false);
-const [error, setError] = useState(null);
+export const useGetWidgets = () => {
+  const [data, setData] = useState<[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-useEffect(() => {
-    const fetchData = async () => {
-        setLoading(true);
-
-        const result = await getWidgets();
-
-        if(result){
-            setLoading(false);
-            setData(result)
-        }else{
-            setError(result)
-        }
+  const fetchWidgets = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await getWidgets();
+      setData(result);
+    } catch (err: any) {
+      setError(err.message || "error");
+      setData([]);
+    } finally {
+      setLoading(false);
     }
+  }, []);
 
-    fetchData()
-}, [enabled])
+  useEffect(() => {
+    fetchWidgets();
+  }, [fetchWidgets]);
 
-return { data, loading, error }
+  return { data, loading, error, refetchWidgets: fetchWidgets };
 };

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
 interface Widget {
   id: number;
@@ -20,15 +20,15 @@ const useCreateWidget = () => {
     setError(null);
     setData(null);
     try {
-      const response = await fetch('http://localhost:3000/create-widget', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://localhost:3000/create-widget", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to create widget');
+        throw new Error(errorData.error || "Failed to create widget");
       }
 
       const result: CreateWidgetResponse = await response.json();
@@ -46,4 +46,3 @@ const useCreateWidget = () => {
 };
 
 export default useCreateWidget;
-
