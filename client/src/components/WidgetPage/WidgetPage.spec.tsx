@@ -10,12 +10,12 @@ let widgetArray: Widgets = {
       id: 1,
       content: "Sales enquiry.",
     },
-       {
+    {
       id: 2,
       content: "Update.",
     },
-  ]
-}
+  ],
+};
 
 let error: string | null = null;
 
@@ -65,26 +65,24 @@ describe("Widget page", () => {
 
     expect(screen.getByLabelText("Create")).toBeTruthy();
   });
- 
+
   test("If the page is refreshed, the same widgets should be populated with the same text as entered before the page refresh.", async () => {
     render(<WidgetPage />);
 
-    expect(screen.getByText('Sales enquiry.')).toBeTruthy();
-    expect(screen.getByText('Update.')).toBeTruthy();
-
+    expect(screen.getByText("Sales enquiry.")).toBeTruthy();
+    expect(screen.getByText("Update.")).toBeTruthy();
 
     window.location.reload();
 
-    await waitFor(() =>{
-      expect(screen.getByText('Sales enquiry.')).toBeTruthy();
-      expect(screen.getByText('Update.')).toBeTruthy();
-    })
-
+    await waitFor(() => {
+      expect(screen.getByText("Sales enquiry.")).toBeTruthy();
+      expect(screen.getByText("Update.")).toBeTruthy();
+    });
   });
   test("should handle server errors", () => {
-    error = 'Error getting widgets'
+    error = "Error getting widgets";
     render(<WidgetPage />);
 
-    expect(screen.getByText('Error loading widgets.')).toBeTruthy();
+    expect(screen.getByText("Error loading widgets.")).toBeTruthy();
   });
 });

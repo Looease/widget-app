@@ -23,6 +23,9 @@ const WidgetPage = () => {
       <div className="button-container">
         <button onClick={handleAddWidget}>Add widget</button>
       </div>
+      {widgets.length === 0 && (
+        <p className="no-widgets">No widgets added. Add one to get started.</p>
+      )}
       <div className="widgets-container">
         {!!loading && <p>Loading widgets...</p>}
         {!!error && <p>Error loading widgets.</p>}
@@ -34,20 +37,16 @@ const WidgetPage = () => {
             setAddWidget={setAddWidget}
           />
         )}
-        {widgets.length === 0 ? (
-          <></>
-        ) : (
-          <>
-            {widgets.map((widget: WidgetType) => (
-              <Widget
-                widget={widget}
-                addWidget={false}
-                handleRefetch={handleRefetch}
-                setAddWidget={setAddWidget}
-              />
-            ))}
-          </>
-        )}
+        {widgets &&
+          widgets.length > 0 &&
+          widgets.map((widget: WidgetType) => (
+            <Widget
+              widget={widget}
+              addWidget={false}
+              handleRefetch={handleRefetch}
+              setAddWidget={setAddWidget}
+            />
+          ))}
       </div>
     </div>
   );

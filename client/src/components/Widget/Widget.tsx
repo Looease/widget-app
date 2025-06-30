@@ -86,7 +86,7 @@ export const Widget = ({
       ) : (
         <section className="container">
           <div className="innerWidget">
-            {!!widget && (
+            {!!widget && !!widget.content && (
               <>
                 <p>{widget.content}</p>
                 <button onClick={() => handleDelete(widget.id)}>Delete</button>

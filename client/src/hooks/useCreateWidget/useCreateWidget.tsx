@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import { createWidget } from '../../requests/createWidget';
-import type { WidgetType } from '../../requests/getWidgets/getWidgets.types';
+import { createWidget } from "../../requests/createWidget";
+import type { WidgetType } from "../../requests/getWidgets/getWidgets.types";
 
 export const useCreateWidget = () => {
   const [loading, setLoading] = useState(false);
