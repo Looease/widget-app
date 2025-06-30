@@ -69,10 +69,11 @@ You can't run tests using Docker at the moment.
 ## Trade offs and future iterations 
 
 ### Increase test coverage 
-- Add more unit testing - I would add more test coverage for get requests and hooks. 
+- Implement Mock service worker (MSW). This will make testing API requests more accessible by passing different server scenarios into tests.
+- Add more unit testing - I would add more test coverage for get requests and hooks with MSW. 
 - Integration testing for the server - I would add integration tests to test data is correctly created/deleted from the DB.
-- Browser testing - I would install Playwright to conduct end to end browser tests.
-- Additional cross browser testing. Currently we just support Google Chrome for this app but I would like to expand that to include Safari/Firefox etc. The app will run in these browsers but styling may be impacted.
+- Browser testing - I would install Playwright to conduct end to end functional,visual and smoke tests.
+- Additional cross browser testing. Currently we just support Google Chrome for this app but I would like to expand that to include Safari/Firefox etc. The app will run in these browsers but styling may be incosistent.
 
 ## Dockerise the whole app
 - Right now the server can be pulled from Docker images but the frontend cannot.
@@ -83,6 +84,8 @@ You can't run tests using Docker at the moment.
 
 ## Libraries I would use
 - Tanstack query for handling data fetching. Tanstack query provides out of the box data fetching and caching which can improve performance and prevent re-renders. 
+- Mock service worker.
+- pgmock for integration testing.
 
 ## Deploy the full stack app
 - I would deploy this app using Netlify. Netlify has a simple CI/CD process for deploying web applications and we can use serverless functions to deploy the server code.
@@ -92,7 +95,10 @@ You can't run tests using Docker at the moment.
 ## Error handling
 - Handle all instances of Error correctly - check if an `error` is `instanceof Error` or `instanceof NetworkError` etc... and throw correctly. 
 - Implement an Observability service to capture and track errors.
-- Implement alerting for user and server errors.   
+- Implement alerting for user and server errors. 
+
+## Styling
+- Improve very basic styling.
 
 ## Trade offs 
 - I used a PostgreSQL database because the database is defined and unlikely to change. I would consider using a MongoDB database if the data was more dynamic. 
