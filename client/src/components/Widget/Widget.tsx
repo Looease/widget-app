@@ -74,6 +74,14 @@ export const Widget = ({
               value={content}
             />
           </div>
+          <div className="cancel-button-container">
+            <button
+              className="cancel-button"
+              onClick={() => setAddWidget(false)}
+            >
+              &times;
+            </button>
+          </div>
         </section>
       ) : (
         <section className="container">
