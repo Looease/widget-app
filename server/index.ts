@@ -1,36 +1,42 @@
 import express, { urlencoded, json } from "express";
 import cors from "cors";
 import { Pool } from 'pg';
-import { createWidget } from './services/create-widget/createWidget.ts'
-import { getWidgets } from "./services/get-widgets/getWidgets.ts";
-import { deleteWidget } from "./services/delete-widget/deleteWidget.ts";
+import { createWidget } from './services/create-widget/createWidget'
+import { getWidgets } from "./services/get-widgets/getWidgets";
+import { deleteWidget } from "./services/delete-widget/deleteWidget";
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const app = express();
 
 app.use(urlencoded({ extended: true }),   
 cors({
-  origin: ["http://localhost:5173",],
+  origin: ["http://localhost:5173", `${process.env.DATABASE_URL}`],
   methods: ['GET', 'POST'],
   credentials: true,
 }));
 app.use(json());
 
+// const pool = new Pool({
+//   user: 'postgres',          
+//   host: 'localhost',       
+//   database: 'postgres',     
+//   password: 'trumpet', 
+//   port: 5432,
+// });
+
 const pool = new Pool({
-  user: 'postgres',          
-  host: 'localhost',       
-  database: 'postgres',     
-  password: 'trumpet', 
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
 });
 
 pool.connect()
-  .then(client => {
+  .then((client: { release: () => void; }) => {
     console.log('connected to db');
     client.release();
   })
-  .catch(err => {
-    console.error('error connecting to db', err.message);
+  .catch((err: unknown) => {
+    if(err instanceof Error){
+      console.error('error connecting to db', err.message);
+    }
     process.exit(1);
   });
 

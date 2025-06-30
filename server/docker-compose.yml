@@ -1,0 +1,35 @@
+services:
+  db:
+    image: 'postgres:16-alpine'
+    container_name: widget-app-postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: widget-app-database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: trumpet
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db_init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'pg_isready -U postgres -d widget-app-database'
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  app:
+    build: .
+    container_name: widget-app-server
+    ports:
+      - '8000:8000'
+    environment:
+      DATABASE_URL: 'postgres://postgres:trumpet@db:5432/widget-app-database'
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:
