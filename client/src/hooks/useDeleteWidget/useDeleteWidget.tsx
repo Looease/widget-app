@@ -15,8 +15,8 @@ export const useDeleteWidget = () => {
     try {
       const response = await deleteWidget(id);
       setData(response);
-    } catch (e: any) {
-      setError(e.message || "error");
+    } catch (e: unknown) {
+      setError(e instanceof Error && e.message || "error");
       setData(null);
     } finally {
       setLoading(false);

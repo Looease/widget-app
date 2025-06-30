@@ -12,9 +12,9 @@ https://github.com/user-attachments/assets/e15ee4b4-9518-4e75-b2d5-2a080eaa57ef
 ### Stack
 The frontend is built with React/Typescript using Vite.
 
-The backend is build with Node and Express.
+The backend is built with Node and Express.
 
-The database is PostgresSQL.
+The database is PostgreSQL.
 
 ## Running widget-app
 
@@ -34,7 +34,7 @@ Assuming you have Docker on your machine, open the Docker Daemon then run:
 
 This script initiates Docker containers for the database and server code and inserts an empty `widgets` table into the database.
 
-You can view your server up and runnning on port `http:/localhost:8000/`
+You can view your server up and running on port `http:/localhost:8000/`
 
 ### Set up the client
 
@@ -50,9 +50,9 @@ When you have installed your dependencies, to launch the application run:
 
 The client is configured to run on port `http://localhost:5173/`
 
-## Contributing
+You are running the widget app!
 
-You are now ready to run the widget app!
+## Contributing
 
 To contribute, please checkout a branch off of `main` and raise a pull request. 
 
@@ -75,7 +75,8 @@ You can't run tests using Docker at the moment.
 - Additional cross browser testing. Currently we just support Google Chrome for this app but I would like to expand that to include Safari/Firefox etc. The app will run in these browsers but styling may be impacted.
 
 ## Dockerise the whole app
-- Right now the server can be pulled from Docker images but the frontend can't.
+- Right now the server can be pulled from Docker images but the frontend cannot.
+- Dockerise test environments.
 
 ## Migrate package manager to pnpm 
 - pnpm is faster and more efficient than npm.
@@ -87,6 +88,11 @@ You can't run tests using Docker at the moment.
 - I would deploy this app using Netlify. Netlify has a simple CI/CD process for deploying web applications and we can use serverless functions to deploy the server code.
 - I would use Supabase to deploy my database. 
 - I would implement CI/CD deployment and testing pipelines to handle testing and deploying the app. 
+
+## Error handling
+- Handle all instances of Error correctly - check if an `error` is `instanceof Error` or `instanceof NetworkError` etc... and throw correctly. 
+- Implement an Observability service to capture and track errors.
+- Implement alerting for user and server errors.   
 
 ## Trade offs 
 - I used a PostgreSQL database because the database is defined and unlikely to change. I would consider using a MongoDB database if the data was more dynamic. 
