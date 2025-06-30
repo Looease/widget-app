@@ -23,7 +23,7 @@ const WidgetPage = () => {
       <div className="button-container">
         <button onClick={handleAddWidget}>Add widget</button>
       </div>
-      {widgets.length === 0 && (
+      {widgets.length === 0 && !addWidget && (
         <p className="no-widgets">No widgets added. Add one to get started.</p>
       )}
       <div className="widgets-container">
