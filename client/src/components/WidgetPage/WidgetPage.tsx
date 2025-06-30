@@ -25,7 +25,7 @@ const WidgetPage = () => {
       </div>
       <div className="widgets-container">
         {!!loading && <p>Loading widgets...</p>}
-        {!!error && <p>Error loading widgets</p>}
+        {!!error && <p>Error loading widgets.</p>}
         {!!addWidget && (
           <Widget
             widget={null}

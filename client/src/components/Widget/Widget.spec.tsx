@@ -1,8 +1,9 @@
-import { describe, test, expect, vi } from "vitest";
+import { describe, test, expect, vi, afterEach } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Widget from "./Widget";
 import type { Widgets } from "../../requests/getWidgets/getWidgets.types";
+import { afterEach } from "node:test";
 
 let data: Widgets | {} = {};
 let error: string | null = null;
@@ -30,6 +31,10 @@ vi.mock("../../hooks/useCreateWidget/useCreateWidget", async () => {
 });
 
 describe("Widget", () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+    error = null;
+  });
   test("should set widget content", async () => {
     render(
       <Widget
@@ -46,17 +51,6 @@ describe("Widget", () => {
 
     expect(input).toHaveValue("Enquiry");
   });
-  // test('should submit widget when user stops typing', async () =>{
-  //   render(<Widget widget={null} addWidget={true} handleRefetch={vi.fn()} setAddWidget={vi.fn()}/>);
-
-  //   const input = screen.getByRole("textbox", { name: "Create" });
-
-  //   await userEvent.type(input, "Enquiry");
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Enquiry')).toBeTruthy();
-  //   })
-  // });
   test("should render saved widget", async () => {
     const widget = {
       id: 1,

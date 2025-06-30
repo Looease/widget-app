@@ -1,7 +1,7 @@
 import type { Widgets } from "./getWidgets.types";
 
 export const getWidgets = async (): Promise<Widgets> => {
-  const url = "http://localhost:3000/widgets";
+  const url = "http://localhost:8000/widgets";
 
   let response;
   try {

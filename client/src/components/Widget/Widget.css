@@ -27,6 +27,8 @@ label {
 
 p {
   color: white;
+  overflow-wrap: break-word;
+  overflow: scroll;
 }
 
 .innerWidget {

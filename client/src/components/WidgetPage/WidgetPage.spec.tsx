@@ -1,16 +1,30 @@
-import { describe, test, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, test, expect, vi, afterEach } from "vitest";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import WidgetPage from "./WidgetPage";
+import type { Widgets } from "../../requests/getWidgets/getWidgets.types";
 
-let widgetArray: never[] = [];
+let widgetArray: Widgets = {
+  widgets: [
+    {
+      id: 1,
+      content: "Sales enquiry.",
+    },
+       {
+      id: 2,
+      content: "Update.",
+    },
+  ]
+}
+
+let error: string | null = null;
 
 vi.mock("../../hooks/useGetWidgets/useGetWidgets", async () => {
   return {
     useGetWidgets: vi.fn(() => ({
       data: widgetArray,
       loading: false,
-      error: null,
+      error: error,
       refetchWidgets: vi.fn(),
     })),
   };
@@ -28,6 +42,10 @@ vi.mock("../../hooks/useCreateWidget/useCreateWidget", async () => {
 });
 
 describe("Widget page", () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+    error = null;
+  });
   test("should render page with add widget button", () => {
     render(<WidgetPage />);
 
@@ -47,16 +65,26 @@ describe("Widget page", () => {
 
     expect(screen.getByLabelText("Create")).toBeTruthy();
   });
-  test("should add a widget on button click", () => {
+ 
+  test("If the page is refreshed, the same widgets should be populated with the same text as entered before the page refresh.", async () => {
     render(<WidgetPage />);
-  });
-  test("When a user is done typing, the text from that widget should be sent to the backend to be stored.", () => {
-    render(<WidgetPage />);
-  });
-  test("If the page is refreshed, the same widgets should be populated with the same text as entered before the page refresh.", () => {
-    render(<WidgetPage />);
+
+    expect(screen.getByText('Sales enquiry.')).toBeTruthy();
+    expect(screen.getByText('Update.')).toBeTruthy();
+
+
+    window.location.reload();
+
+    await waitFor(() =>{
+      expect(screen.getByText('Sales enquiry.')).toBeTruthy();
+      expect(screen.getByText('Update.')).toBeTruthy();
+    })
+
   });
   test("should handle server errors", () => {
+    error = 'Error getting widgets'
     render(<WidgetPage />);
+
+    expect(screen.getByText('Error loading widgets.')).toBeTruthy();
   });
 });

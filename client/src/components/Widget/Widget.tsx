@@ -19,7 +19,7 @@ export const Widget = ({
   const [content, setContent] = useState("");
 
   const {
-    createWidget,
+    createNeWidget,
     loading: creatingWidget,
     error: createWidgetError,
   } = useCreateWidget();
@@ -44,20 +44,20 @@ export const Widget = ({
   const searchQuery = useDebounce(content, 2000);
 
   useEffect(() => {
-    const createNewWidget = async () => {
+    const createWidget = async () => {
       if (!creatingWidget) {
         setAddWidget(false);
         setContent("");
       }
       try {
-        await createWidget(content);
+        await createNeWidget(content);
         handleRefetch();
       } catch (e) {
         console.error("Error:", e);
       }
     };
 
-    if (searchQuery || content.length < 0) createNewWidget();
+    if (searchQuery || content.length < 0) createWidget();
   }, [searchQuery]);
 
   return (

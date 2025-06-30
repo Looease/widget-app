@@ -1,5 +1,5 @@
 export const createWidget = async (content: string) => {
-  const url = "http://localhost:3000/create-widget";
+  const url = "http://localhost:8000/create-widget";
 
   try {
     const response = await fetch(url, {

@@ -1,39 +1,19 @@
 import { useState, useCallback } from "react";
-
-interface Widget {
-  id: number;
-  content: string;
-}
-
-interface CreateWidgetResponse {
-  message: string;
-  widget: Widget;
-}
+import { createWidget } from '../../requests/createWidget';
+import type { WidgetType } from '../../requests/getWidgets/getWidgets.types';
 
 export const useCreateWidget = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<Widget | null>(null);
+  const [data, setData] = useState<WidgetType | null>(null);
 
-  const createWidget = useCallback(async (content: string) => {
+  const createNeWidget = useCallback(async (content: string) => {
     setLoading(true);
     setError(null);
     setData(null);
     try {
-      const response = await fetch("http://localhost:3000/create-widget", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to create widget");
-      }
-
-      const result: CreateWidgetResponse = await response.json();
+      const result = await createWidget(content);
       setData(result.widget);
-      return result.widget;
     } catch (err: any) {
       setError(err.message);
       throw err;
@@ -42,5 +22,5 @@ export const useCreateWidget = () => {
     }
   }, []);
 
-  return { createWidget, loading, error, data };
+  return { createNeWidget, loading, error, data };
 };
