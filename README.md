@@ -5,6 +5,10 @@ This is a full stack application that allows you to create, view and delete widg
 
 Widgets are components that contain text.
 
+You can see a recording of the application below: 
+
+https://github.com/user-attachments/assets/e15ee4b4-9518-4e75-b2d5-2a080eaa57ef
+
 ### Stack
 The frontend is built with React/Typescript using Vite.
 
