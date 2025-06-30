@@ -3,7 +3,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Widget from "./Widget";
 import type { Widgets } from "../../requests/getWidgets/getWidgets.types";
-import { afterEach } from "node:test";
 
 let data: Widgets | {} = {};
 let error: string | null = null;
@@ -45,11 +44,11 @@ describe("Widget", () => {
       />,
     );
 
-    const input = screen.getByRole("textbox", { name: "Create" });
+    const input = screen.getByRole("textbox", { name: "Create" }) as HTMLInputElement;
 
     await userEvent.type(input, "Enquiry");
 
-    expect(input).toHaveValue("Enquiry");
+    expect(input.value).toBe('Enquiry')
   });
   test("should render saved widget", async () => {
     const widget = {
@@ -86,7 +85,7 @@ describe("Widget", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "Create widget error. Please delete this one and try again.",
+          "Create widget error. Please try again.",
         ),
       ).toBeTruthy();
     });

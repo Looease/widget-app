@@ -85,10 +85,10 @@ export const Widget = ({
         </section>
       ) : (
         <section className="container">
-          <div className="innerWidget">
+          <div className="inner-widget">
             {!!widget && !!widget.content && (
               <>
-                <p>{widget.content}</p>
+                <p className="widget-text">{widget.content}</p>
                 <button onClick={() => handleDelete(widget.id)}>Delete</button>
               </>
             )}
@@ -97,8 +97,8 @@ export const Widget = ({
       )}
       {!!createWidgetError && (
         <section className="container">
-          <div className="innerWidget">
-            <p>Create widget error. Please delete this one and try again.</p>
+          <div className="inner-widget">
+            <p className="widget-text">Create widget error. Please try again.</p>
           </div>
         </section>
       )}

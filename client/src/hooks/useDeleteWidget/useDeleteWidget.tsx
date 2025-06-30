@@ -1,20 +1,12 @@
 import { useState, useCallback } from "react";
 import { deleteWidget } from "../../requests/deleteWidget/deleteWidget";
+import type { WidgetType } from "../../requests/getWidgets/getWidgets.types";
 
-interface Widget {
-  id: number;
-  content: string;
-}
-
-interface CreateWidgetResponse {
-  message: string;
-  widget: Widget;
-}
 
 export const useDeleteWidget = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<Widget | null>(null);
+  const [data, setData] = useState<WidgetType | null>(null);
 
   const deleteItem = useCallback(async (id: number) => {
     setLoading(true);

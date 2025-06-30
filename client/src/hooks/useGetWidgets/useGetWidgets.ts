@@ -2,12 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { getWidgets } from "../../requests/getWidgets/getWidgets";
 import type { Widgets } from "../../requests/getWidgets/getWidgets.types";
 
-const initialState = {
-  widgets: [{ id: 0, content: "" }],
-};
-
 export const useGetWidgets = () => {
-  const [data, setData] = useState<Widgets>(initialState);
+  const [data, setData] = useState<Widgets | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -19,7 +15,7 @@ export const useGetWidgets = () => {
       setData(result);
     } catch (err: any) {
       setError(err.message || "error");
-      setData(initialState);
+      setData(null);
     } finally {
       setLoading(false);
     }

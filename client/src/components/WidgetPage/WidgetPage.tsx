@@ -18,17 +18,23 @@ const WidgetPage = () => {
 
   const handleRefetch = refetchWidgets;
 
+  if(loading){
+    return <p>Loading widgets...</p>;
+  }
+
+  if(error){
+    return <p>Error loading widgets.</p>;
+  }
+
   return (
     <div>
       <div className="button-container">
         <button onClick={handleAddWidget}>Add widget</button>
       </div>
-      {widgets.length === 0 && !addWidget && (
+      {!widgets || widgets.length === 0 && !addWidget && (
         <p className="no-widgets">No widgets added. Add one to get started.</p>
       )}
       <div className="widgets-container">
-        {!!loading && <p>Loading widgets...</p>}
-        {!!error && <p>Error loading widgets.</p>}
         {!!addWidget && (
           <Widget
             widget={null}
@@ -37,14 +43,14 @@ const WidgetPage = () => {
             setAddWidget={setAddWidget}
           />
         )}
-        {widgets &&
-          widgets.length > 0 &&
-          widgets.map((widget: WidgetType) => (
+        {widgets.length > 0 && 
+          widgets.map((widget: WidgetType, index: number) => (
             <Widget
               widget={widget}
               addWidget={false}
               handleRefetch={handleRefetch}
               setAddWidget={setAddWidget}
+              key={`${widget.id}-${index}`}
             />
           ))}
       </div>
