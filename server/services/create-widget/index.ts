@@ -1,3 +1,3 @@
-import { createWidget } from './createWidget'
+import { createWidget } from "./createWidget";
 
 export default createWidget;

@@ -1,4 +1,4 @@
-export * from './getWidgets';
+export * from "./getWidgets";
 
 //docker run --name widget-app-database -e POSTGRES_PASSWORD=trumpet -p 5432:5432 -d postgres
 

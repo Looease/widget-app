@@ -1,6 +1,6 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
-import { Pool } from 'pg';
-import { createWidget } from "./createWidget"; 
+import { Pool } from "pg";
+import { createWidget } from "./createWidget";
 
 describe("createWidget", () => {
   let mockPool: Pool;
@@ -8,7 +8,7 @@ describe("createWidget", () => {
 
   beforeEach(() => {
     mockQuery = vi.fn();
-    mockPool = { query: mockQuery } as any; 
+    mockPool = { query: mockQuery } as any;
   });
 
   test("should insert a new widget and return its data", async () => {
@@ -17,21 +17,21 @@ describe("createWidget", () => {
 
     mockQuery.mockResolvedValueOnce({
       rows: [mockInsertedWidget],
-      command: 'INSERT',
+      command: "INSERT",
       rowCount: 1,
       oid: 0,
-      fields: []
+      fields: [],
     });
 
     const result = await createWidget(mockPool, mockContent);
 
-    expect(mockQuery).toHaveBeenCalledTimes(1); 
+    expect(mockQuery).toHaveBeenCalledTimes(1);
     expect(mockQuery).toHaveBeenCalledWith(
       "INSERT INTO widgets(content) VALUES ($1) RETURNING id, content",
-      [mockContent]
-    ); 
+      [mockContent],
+    );
 
-    expect(result).toEqual(mockInsertedWidget); 
+    expect(result).toEqual(mockInsertedWidget);
   });
 
   test("should throw an error if the database query fails", async () => {
@@ -41,13 +41,13 @@ describe("createWidget", () => {
     mockQuery.mockRejectedValueOnce(mockError);
 
     await expect(createWidget(mockPool, mockContent)).rejects.toThrow(
-      "Internal server error"
+      "Internal server error",
     );
 
     expect(mockQuery).toHaveBeenCalledTimes(1);
     expect(mockQuery).toHaveBeenCalledWith(
       "INSERT INTO widgets(content) VALUES ($1) RETURNING id, content",
-      [mockContent]
+      [mockContent],
     );
   });
 });

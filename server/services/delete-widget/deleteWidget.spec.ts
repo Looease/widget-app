@@ -1,6 +1,6 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
-import { Pool } from 'pg';
-import { deleteWidget } from "./deleteWidget"; 
+import { Pool } from "pg";
+import { deleteWidget } from "./deleteWidget";
 
 describe("deleteWidget", () => {
   let mockPool: Pool;
@@ -8,7 +8,7 @@ describe("deleteWidget", () => {
 
   beforeEach(() => {
     mockQuery = vi.fn();
-    mockPool = { query: mockQuery } as any; 
+    mockPool = { query: mockQuery } as any;
   });
 
   test("should delete widget and return deleted data", async () => {
@@ -17,21 +17,21 @@ describe("deleteWidget", () => {
 
     mockQuery.mockResolvedValueOnce({
       rows: [mockInsertedWidget],
-      command: 'DELETE',
+      command: "DELETE",
       rowCount: 1,
       oid: 0,
-      fields: []
+      fields: [],
     });
 
     const result = await deleteWidget(mockPool, mockContent);
 
-    expect(mockQuery).toHaveBeenCalledTimes(1); 
+    expect(mockQuery).toHaveBeenCalledTimes(1);
     expect(mockQuery).toHaveBeenCalledWith(
       "DELETE FROM widgets WHERE id = $1 RETURNING id",
-      [mockContent]
-    ); 
+      [mockContent],
+    );
 
-    expect(result).toEqual([mockInsertedWidget]); 
+    expect(result).toEqual([mockInsertedWidget]);
   });
 
   test("should throw an error if the delete fails", async () => {
@@ -41,13 +41,13 @@ describe("deleteWidget", () => {
     mockQuery.mockRejectedValueOnce(mockError);
 
     await expect(deleteWidget(mockPool, mockContent)).rejects.toThrow(
-      "Internal server error"
+      "Internal server error",
     );
 
     expect(mockQuery).toHaveBeenCalledTimes(1);
     expect(mockQuery).toHaveBeenCalledWith(
       "DELETE FROM widgets WHERE id = $1 RETURNING id",
-      [mockContent]
+      [mockContent],
     );
   });
 });
