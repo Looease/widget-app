@@ -71,14 +71,14 @@ You can't run tests using Docker at the moment.
 ### Increase test coverage 
 - Add more unit testing - I would add more test coverage for get requests and hooks. 
 - Integration testing for the server - I would add integration tests to test data is correctly created/deleted from the DB.
-- Browser testing - I would install playwright to conduct end to end browser tests.
+- Browser testing - I would install Playwright to conduct end to end browser tests.
 - Additional cross browser testing. Currently we just support Google Chrome for this app but I would like to expand that to include Safari/Firefox etc. The app will run in these browsers but styling may be impacted.
 
 ## Dockerise the whole app
-- Right now the server can be pulled from Docker images but the frontend can't
+- Right now the server can be pulled from Docker images but the frontend can't.
 
 ## Migrate package manager to pnpm 
-- pnpm is faster and more efficient than npm
+- pnpm is faster and more efficient than npm.
 
 ## Libraries I would use
 - Tanstack query for handling data fetching. Tanstack query provides out of the box data fetching and caching which can improve performance and prevent re-renders. 
