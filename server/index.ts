@@ -18,14 +18,6 @@ app.use(
 );
 app.use(json());
 
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'postgres',
-//   password: 'trumpet',
-//   port: 5432,
-// });
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
@@ -44,7 +36,11 @@ pool
   });
 
 app.get("/", (req, res) => {
-  res.status(200).json({ msg: "Server is up and running" });
+  res.status(200).json({endpoints: [
+    'getWidgets: /widgets' ,
+    'createWidgets: /create-widget' ,
+    'deleteWidgets: /delete-widget'
+  ]});
 });
 
 app.get("/widgets", async (req, res) => {
