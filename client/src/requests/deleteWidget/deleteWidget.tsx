@@ -1,5 +1,5 @@
 export const deleteWidget = async (id: number) => {
-  const url = "http://localhost:3000/delete-widget";
+  const url = "http://localhost:8000/delete-widget";
 
   try {
     const response = await fetch(url, {
