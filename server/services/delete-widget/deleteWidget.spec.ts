@@ -1,8 +1,8 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import { Pool } from 'pg';
-import { createWidget } from "./createWidget"; 
+import { deleteWidget } from "./deleteWidget"; 
 
-describe("createWidget", () => {
+describe("deleteWidget", () => {
   let mockPool: Pool;
   let mockQuery: ReturnType<typeof vi.fn>;
 
@@ -11,42 +11,42 @@ describe("createWidget", () => {
     mockPool = { query: mockQuery } as any; 
   });
 
-  test("should insert a new widget and return its data", async () => {
-    const mockContent = "Enquiry";
+  test("should delete widget and return deleted data", async () => {
+    const mockContent = 1;
     const mockInsertedWidget = { id: 1, content: mockContent };
 
     mockQuery.mockResolvedValueOnce({
       rows: [mockInsertedWidget],
-      command: 'INSERT',
+      command: 'DELETE',
       rowCount: 1,
       oid: 0,
       fields: []
     });
 
-    const result = await createWidget(mockPool, mockContent);
+    const result = await deleteWidget(mockPool, mockContent);
 
     expect(mockQuery).toHaveBeenCalledTimes(1); 
     expect(mockQuery).toHaveBeenCalledWith(
-      "INSERT INTO widgets(content) VALUES ($1) RETURNING id, content",
+      "DELETE FROM widgets WHERE id = $1 RETURNING id",
       [mockContent]
     ); 
 
-    expect(result).toEqual(mockInsertedWidget); 
+    expect(result).toEqual([mockInsertedWidget]); 
   });
 
-  test("should throw an error if the database query fails", async () => {
-    const mockContent = "Content that causes error";
+  test("should throw an error if the delete fails", async () => {
+    const mockContent = 1;
     const mockError = new Error("Internal server error");
 
     mockQuery.mockRejectedValueOnce(mockError);
 
-    await expect(createWidget(mockPool, mockContent)).rejects.toThrow(
+    await expect(deleteWidget(mockPool, mockContent)).rejects.toThrow(
       "Internal server error"
     );
 
     expect(mockQuery).toHaveBeenCalledTimes(1);
     expect(mockQuery).toHaveBeenCalledWith(
-      "INSERT INTO widgets(content) VALUES ($1) RETURNING id, content",
+      "DELETE FROM widgets WHERE id = $1 RETURNING id",
       [mockContent]
     );
   });
