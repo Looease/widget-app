@@ -14,8 +14,11 @@ export const useCreateWidget = () => {
     try {
       const result = await createWidget(content);
       setData(result.widget);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error('Error creating widget',err.message);
+        setError(err.message);
+      }
       throw err;
     } finally {
       setLoading(false);

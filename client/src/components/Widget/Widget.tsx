@@ -98,7 +98,9 @@ export const Widget = ({
       {!!createWidgetError && (
         <section className="container">
           <div className="inner-widget">
-            <p className="widget-text">Create widget error. Please try again.</p>
+            <p className="widget-text">
+              Create widget error. Please try again.
+            </p>
           </div>
         </section>
       )}

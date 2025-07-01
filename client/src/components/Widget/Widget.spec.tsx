@@ -44,11 +44,13 @@ describe("Widget", () => {
       />,
     );
 
-    const input = screen.getByRole("textbox", { name: "Create" }) as HTMLInputElement;
+    const input = screen.getByRole("textbox", {
+      name: "Create",
+    }) as HTMLInputElement;
 
     await userEvent.type(input, "Enquiry");
 
-    expect(input.value).toBe('Enquiry')
+    expect(input.value).toBe("Enquiry");
   });
   test("should render saved widget", async () => {
     const widget = {
@@ -84,9 +86,7 @@ describe("Widget", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          "Create widget error. Please try again.",
-        ),
+        screen.getByText("Create widget error. Please try again."),
       ).toBeTruthy();
     });
   });

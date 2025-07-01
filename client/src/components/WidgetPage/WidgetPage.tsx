@@ -18,11 +18,11 @@ const WidgetPage = () => {
 
   const handleRefetch = refetchWidgets;
 
-  if(loading){
+  if (loading) {
     return <p>Loading widgets...</p>;
   }
 
-  if(error){
+  if (error) {
     return <p>Error loading widgets.</p>;
   }
 
@@ -31,7 +31,7 @@ const WidgetPage = () => {
       <div className="button-container">
         <button onClick={handleAddWidget}>Add widget</button>
       </div>
-      {!widgets || widgets.length === 0 && !addWidget && (
+      {(!widgets || widgets.length === 0) && !addWidget && (
         <p className="no-widgets">No widgets added. Add one to get started.</p>
       )}
       <div className="widgets-container">
@@ -43,7 +43,7 @@ const WidgetPage = () => {
             setAddWidget={setAddWidget}
           />
         )}
-        {widgets.length > 0 && 
+        {widgets.length > 0 &&
           widgets.map((widget: WidgetType, index: number) => (
             <Widget
               widget={widget}

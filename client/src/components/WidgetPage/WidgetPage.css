@@ -33,7 +33,7 @@ html {
     padding: var(--large-space);
   }
 
- .button-container {
-  border-right: solid black 1px;
-}
+  .button-container {
+    border-right: solid black 1px;
+  }
 }

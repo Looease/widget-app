@@ -5,7 +5,7 @@ import type { Widgets } from "../../requests/getWidgets/getWidgets.types";
 export const useGetWidgets = () => {
   const [data, setData] = useState<Widgets | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchWidgets = useCallback(async () => {
     setLoading(true);
@@ -13,8 +13,12 @@ export const useGetWidgets = () => {
     try {
       const result = await getWidgets();
       setData(result);
-    } catch (err: any) {
-      setError(err.message || "error");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("error");
+      }
       setData(null);
     } finally {
       setLoading(false);
