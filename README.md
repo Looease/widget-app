@@ -86,6 +86,8 @@ You can't run tests using Docker at the moment.
 - Tanstack query for handling data fetching. Tanstack query provides out of the box data fetching and caching which can improve performance and prevent re-renders. 
 - Mock service worker.
 - pgmock for integration testing.
+- dotenv
+- CSS modules 
 
 ## Deploy the full stack app
 - I would deploy this app using Netlify. Netlify has a simple CI/CD process for deploying web applications and we can use serverless functions to deploy the server code.
@@ -101,7 +103,8 @@ You can't run tests using Docker at the moment.
 - Improve very basic styling.
 
 ## Trade offs 
-- I used a PostgreSQL database because the database is defined and unlikely to change. I would consider using a MongoDB database if the data was more dynamic. 
+- I used a PostgreSQL database because the database is defined and unlikely to change. I would consider using a MongoDB database if the data was more dynamic.
+- I have not used environment variablers or secrets in this application. If I had more time I would extract api urls, database connection details and other secure details to a `.env` file and pass them into the application securely.
 
 
 
